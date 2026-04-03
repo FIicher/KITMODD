@@ -195,8 +195,81 @@ body { background:var(--bg-primary); color:var(--text-primary); font-family:'Seg
 #resize-handle { width:4px; cursor:col-resize; background:transparent; transition:background 0.2s; flex-shrink:0; }
 #resize-handle:hover, #resize-handle.dragging { background:var(--accent-blue); }
 
+/* Options Popup */
+.options-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:5000; backdrop-filter:blur(4px); }
+.options-overlay.show { display:flex; align-items:center; justify-content:center; }
+.options-popup { background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:16px; padding:32px; max-width:520px; width:90%; box-shadow:0 24px 48px rgba(0,0,0,0.5); }
+.options-popup h3 { margin-bottom:24px; font-size:18px; display:flex; align-items:center; gap:10px; }
+.options-grid { display:grid; grid-template-columns:repeat(3, 1fr); gap:16px; }
+.option-card { background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:12px; padding:20px 12px; text-align:center; cursor:pointer; transition:all 0.25s; }
+.option-card:hover { border-color:var(--accent-blue); background:var(--bg-hover); transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,0,0,0.3); }
+.option-card svg { width:36px; height:36px; margin-bottom:10px; }
+.option-card .opt-label { font-size:12px; color:var(--text-secondary); font-weight:500; }
+.option-card.active { border-color:var(--accent-green); }
+
+/* AI Panel */
+.ai-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.6); z-index:6000; backdrop-filter:blur(4px); }
+.ai-overlay.show { display:flex; align-items:center; justify-content:center; }
+.ai-panel { background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:16px; width:90%; max-width:700px; max-height:85vh; display:flex; flex-direction:column; overflow:hidden; box-shadow:0 24px 48px rgba(0,0,0,0.5); }
+.ai-panel-header { padding:16px 20px; border-bottom:1px solid var(--border-color); display:flex; align-items:center; gap:12px; flex-shrink:0; }
+.ai-panel-header h4 { flex:1; margin:0; font-size:16px; display:flex; align-items:center; gap:8px; }
+.ai-panel-header .close-ai { background:none; border:none; color:var(--text-secondary); cursor:pointer; font-size:18px; padding:4px 8px; border-radius:6px; transition:all 0.2s; }
+.ai-panel-header .close-ai:hover { color:var(--text-primary); background:var(--bg-hover); }
+.ai-panel-body { flex:1; overflow-y:auto; padding:20px; }
+.ai-section { margin-bottom:20px; }
+.ai-section h6 { font-size:12px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-secondary); margin-bottom:10px; }
+.ai-input-group { display:flex; gap:8px; align-items:center; }
+.ai-input { background:var(--bg-tertiary); border:1px solid var(--border-color); color:var(--text-primary); padding:8px 12px; border-radius:8px; font-size:13px; flex:1; }
+.ai-input:focus { outline:none; border-color:var(--accent-blue); }
+.ai-select { background:var(--bg-tertiary); border:1px solid var(--border-color); color:var(--text-primary); padding:8px 12px; border-radius:8px; font-size:13px; width:100%; }
+.ai-select:focus { outline:none; border-color:var(--accent-blue); }
+.ai-btn { padding:8px 16px; border-radius:8px; border:1px solid var(--border-color); cursor:pointer; font-size:12px; font-weight:600; display:inline-flex; align-items:center; gap:6px; transition:all 0.2s; }
+.ai-btn-primary { background:#1f6feb; border-color:#1f6feb; color:#fff; }
+.ai-btn-primary:hover { background:#388bfd; }
+.ai-btn-success { background:#238636; border-color:#238636; color:#fff; }
+.ai-btn-success:hover { background:#2ea043; }
+.ai-btn-outline { background:transparent; border-color:var(--border-color); color:var(--text-primary); }
+.ai-btn-outline:hover { background:var(--bg-hover); }
+.ai-status { display:inline-flex; align-items:center; gap:6px; font-size:12px; padding:4px 10px; border-radius:20px; }
+.ai-status.connected { background:rgba(63,185,80,0.15); color:var(--accent-green); }
+.ai-status.disconnected { background:rgba(248,81,73,0.15); color:var(--accent-red); }
+.ai-chat { margin-top:16px; }
+.ai-chat-messages { max-height:400px; overflow-y:auto; padding:12px; background:var(--bg-primary); border:1px solid var(--border-color); border-radius:10px; margin-bottom:12px; }
+.ai-msg { margin-bottom:12px; padding:10px 14px; border-radius:10px; font-size:13px; line-height:1.6; }
+.ai-msg.user { background:rgba(31,111,235,0.15); border:1px solid rgba(31,111,235,0.2); margin-left:40px; }
+.ai-msg.assistant { background:var(--bg-tertiary); border:1px solid var(--border-color); margin-right:20px; }
+.ai-msg .msg-role { font-size:10px; text-transform:uppercase; letter-spacing:0.5px; color:var(--text-secondary); margin-bottom:4px; }
+.ai-msg pre { background:var(--bg-primary); padding:10px; border-radius:6px; overflow-x:auto; margin:8px 0; font-size:12px; border:1px solid var(--border-color); }
+.ai-msg code { font-family:'Consolas','Courier New',monospace; font-size:12px; }
+.ai-msg p { margin:4px 0; }
+.ai-chat-input { display:flex; gap:8px; }
+.ai-chat-input input { flex:1; }
+.ai-key-hidden { display:none; }
+.ai-key-hidden.show { display:block; margin-top:10px; }
+
+/* Green Blinking Notification */
+.ai-notif { position:fixed; bottom:70px; right:20px; z-index:4000; width:44px; height:44px; border-radius:50%; background:var(--accent-green); border:none; cursor:pointer; display:none; align-items:center; justify-content:center; box-shadow:0 4px 16px rgba(63,185,80,0.4); animation:aiBlink 1.5s ease-in-out infinite; transition:transform 0.2s; }
+.ai-notif:hover { transform:scale(1.1); }
+.ai-notif.show { display:flex; }
+.ai-notif svg { width:22px; height:22px; fill:#fff; }
+@keyframes aiBlink { 0%,100% { box-shadow:0 4px 16px rgba(63,185,80,0.4); } 50% { box-shadow:0 4px 24px rgba(63,185,80,0.8), 0 0 40px rgba(63,185,80,0.3); } }
+
+/* AI Suggestions Popup */
+.ai-suggestions-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); z-index:7000; backdrop-filter:blur(3px); }
+.ai-suggestions-overlay.show { display:flex; align-items:center; justify-content:center; }
+.ai-suggestions-panel { background:var(--bg-secondary); border:1px solid var(--border-color); border-radius:16px; width:90%; max-width:650px; max-height:80vh; overflow-y:auto; padding:24px; box-shadow:0 24px 48px rgba(0,0,0,0.5); }
+.ai-suggestions-panel h4 { margin-bottom:16px; display:flex; align-items:center; gap:10px; }
+.ai-suggestion-card { background:var(--bg-tertiary); border:1px solid var(--border-color); border-radius:10px; padding:14px; margin-bottom:10px; cursor:pointer; transition:all 0.2s; }
+.ai-suggestion-card:hover { border-color:var(--accent-blue); background:var(--bg-hover); }
+.ai-suggestion-card .sug-title { font-weight:600; font-size:13px; margin-bottom:4px; }
+.ai-suggestion-card .sug-desc { font-size:12px; color:var(--text-secondary); line-height:1.5; }
+.ai-suggestion-card pre { background:var(--bg-primary); padding:8px; border-radius:6px; margin-top:8px; font-size:11px; overflow-x:auto; border:1px solid var(--border-color); }
+
+/* Preview iframe */
+#preview-iframe { width:100%; height:100%; border:none; border-radius:0; }
+
 /* Responsive */
-@media (max-width:768px) { #sidebar { width:200px; min-width:150px; } }
+@media (max-width:768px) { #sidebar { width:200px; min-width:150px; } .options-grid { grid-template-columns:repeat(2, 1fr); } }
 
 /* Script info panel */
 .script-info { padding:16px; }
@@ -227,6 +300,7 @@ body { background:var(--bg-primary); color:var(--text-primary); font-family:'Seg
         <button class="btn-nav" onclick="addFiles()" title="Ajouter des fichiers"><i class="fas fa-plus"></i> Add Files</button>
         <button class="btn-nav success" onclick="exportZip()" title="Exporter en ZIP"><i class="fas fa-download"></i> Export ZIP</button>
         <button class="btn-nav" onclick="showModInfo()" title="Infos du mod"><i class="fas fa-info-circle"></i></button>
+        <button class="btn-nav" onclick="openOptions()" title="Options"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Options</button>
         <button class="btn-nav danger" onclick="closeMod()" title="Fermer le mod"><i class="fas fa-times"></i></button>
     </div>
 </div>
@@ -245,11 +319,11 @@ body { background:var(--bg-primary); color:var(--text-primary); font-family:'Seg
             <div class="formats">
                 <span>.esp</span><span>.esm</span><span>.esl</span><span>.bsa</span><span>.ba2</span>
                 <span>.nif</span><span>.dds</span><span>.pex</span><span>.psc</span><span>.seq</span>
-                <span>.zip</span><span>.jar</span><span>folders</span>
+                <span>.zip</span><span>.jar</span><span>.rar</span><span>.7z</span><span>folders</span>
             </div>
         </div>
-        <input type="file" id="import-input" style="display:none" multiple accept=".zip,.jar,.esp,.esm,.esl,.bsa,.ba2,.nif,.dds,.pex,.psc,.seq,.swf,.txt,.cfg,.ini,.json,.xml" webkitdirectory>
-        <input type="file" id="import-zip-input" style="display:none" accept=".zip,.jar">
+        <input type="file" id="import-input" style="display:none" multiple accept=".zip,.jar,.rar,.7z,.esp,.esm,.esl,.bsa,.ba2,.nif,.dds,.pex,.psc,.seq,.swf,.txt,.cfg,.ini,.json,.xml" webkitdirectory>
+        <input type="file" id="import-zip-input" style="display:none" accept=".zip,.jar,.rar,.7z">
         <input type="file" id="add-files-input" style="display:none" multiple>
     </div>
 
@@ -276,7 +350,9 @@ body { background:var(--bg-primary); color:var(--text-primary); font-family:'Seg
                 <div id="overview-panel" class="panel active"></div>
                 <div id="editor-panel" class="panel"></div>
                 <div id="hex-panel" class="panel"></div>
-                <div id="preview-panel" class="panel"></div>
+                <div id="preview-panel" class="panel">
+                    <iframe id="preview-iframe" src="https://pdf.celephe.com/3D.php" allow="fullscreen; autoplay"></iframe>
+                </div>
                 <div id="props-panel" class="panel"></div>
             </div>
         </div>
@@ -296,6 +372,128 @@ body { background:var(--bg-primary); color:var(--text-primary); font-family:'Seg
     <span id="sb-selected"></span>
 </div>
 
+<!-- Options Popup -->
+<div class="options-overlay" id="options-overlay" onclick="if(event.target===this)closeOptions()">
+    <div class="options-popup">
+        <h3><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg> Options</h3>
+        <div class="options-grid">
+            <div class="option-card" onclick="closeOptions();openAIPanel()">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a4 4 0 014 4v1a1 1 0 001 1h1a4 4 0 010 8h-1a1 1 0 00-1 1v1a4 4 0 01-8 0v-1a1 1 0 00-1-1H6a4 4 0 010-8h1a1 1 0 001-1V6a4 4 0 014-4z"/><circle cx="12" cy="12" r="2"/></svg>
+                <div class="opt-label">Intelligence IA</div>
+            </div>
+            <div class="option-card" onclick="closeOptions();toast('Thème — bientôt disponible','info')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-purple)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 2a15.3 15.3 0 014 10 15.3 15.3 0 01-4 10 15.3 15.3 0 01-4-10 15.3 15.3 0 014-10z"/><path d="M2 12h20"/></svg>
+                <div class="opt-label">Thèmes</div>
+            </div>
+            <div class="option-card" onclick="closeOptions();toast('Raccourcis — bientôt disponible','info')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M6 8h.01M10 8h.01M14 8h4M6 12h4M14 12h.01M18 12h.01M8 16h8"/></svg>
+                <div class="opt-label">Raccourcis</div>
+            </div>
+            <div class="option-card" onclick="closeOptions();toast('Plugins — bientôt disponible','info')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-orange)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 000 1.4l1.6 1.6a1 1 0 001.4 0l3.77-3.77a6 6 0 01-7.94 7.94l-6.91 6.91a2.12 2.12 0 01-3-3l6.91-6.91a6 6 0 017.94-7.94l-3.76 3.76z"/></svg>
+                <div class="opt-label">Plugins</div>
+            </div>
+            <div class="option-card" onclick="closeOptions();toast('Export avancé — bientôt disponible','info')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--accent-red)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+                <div class="opt-label">Export Avancé</div>
+            </div>
+            <div class="option-card" onclick="closeOptions();toast('Paramètres — bientôt disponible','info')">
+                <svg viewBox="0 0 24 24" fill="none" stroke="var(--text-secondary)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z"/></svg>
+                <div class="opt-label">Paramètres</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Panel -->
+<div class="ai-overlay" id="ai-overlay" onclick="if(event.target===this)closeAIPanel()">
+    <div class="ai-panel">
+        <div class="ai-panel-header">
+            <h4>
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><path d="M12 2a4 4 0 014 4v1a1 1 0 001 1h1a4 4 0 010 8h-1a1 1 0 00-1 1v1a4 4 0 01-8 0v-1a1 1 0 00-1-1H6a4 4 0 010-8h1a1 1 0 001-1V6a4 4 0 014-4z"/><circle cx="12" cy="12" r="2"/></svg>
+                Intelligence IA — Groq
+            </h4>
+            <span class="ai-status disconnected" id="ai-status-badge">
+                <svg width="10" height="10" viewBox="0 0 10 10"><circle cx="5" cy="5" r="5" fill="currentColor"/></svg>
+                <span id="ai-status-text">Désactivé</span>
+            </span>
+            <button class="close-ai" onclick="closeAIPanel()">&times;</button>
+        </div>
+        <div class="ai-panel-body">
+            <div class="ai-section">
+                <h6>Activation</h6>
+                <button class="ai-btn ai-btn-primary" id="ai-activate-btn" onclick="toggleAIActivation()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+                    <span id="ai-activate-text">Activer IA</span>
+                </button>
+                <div class="ai-key-hidden" id="ai-key-section">
+                    <h6 style="margin-top:16px">Clé API Groq</h6>
+                    <div class="ai-input-group">
+                        <input type="password" class="ai-input" id="ai-api-key" placeholder="Entrez votre clé API Groq (gsk_...)">
+                        <button class="ai-btn ai-btn-outline" onclick="toggleKeyVisibility()">
+                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="ai-section">
+                <h6>Modèle de Langage IA</h6>
+                <select class="ai-select" id="ai-model-select">
+                    <option value="qwen/qwen3-32b">Qwen3 32B</option>
+                    <option value="meta-llama/llama-4-scout-17b-16e-instruct">Llama 4 Scout 17B</option>
+                    <option value="llama-3.3-70b-versatile" selected>Llama 3.3 70B Versatile</option>
+                    <option value="llama-3.1-8b-instant">Llama 3.1 8B Instant</option>
+                    <option value="openai/gpt-oss-120b">GPT-OSS 120B</option>
+                    <option value="openai/gpt-oss-20b">GPT-OSS 20B</option>
+                    <option value="openai/gpt-oss-safeguard-20b">GPT-OSS Safeguard 20B</option>
+                    <option value="moonshotai/kimi-k2-instruct">Kimi K2 Instruct</option>
+                    <option value="moonshotai/kimi-k2-instruct-0905">Kimi K2 Instruct 0905</option>
+                    <option value="groq/compound">Groq Compound</option>
+                    <option value="groq/compound-mini">Groq Compound Mini</option>
+                    <option value="canopylabs/orpheus-arabic-saudi">Orpheus Arabic Saudi</option>
+                    <option value="canopylabs/orpheus-v1-english">Orpheus V1 English</option>
+                    <option value="meta-llama/llama-prompt-guard-2-22m">Llama Prompt Guard 22M</option>
+                    <option value="meta-llama/llama-prompt-guard-2-86m">Llama Prompt Guard 86M</option>
+                    <option value="whisper-large-v3">Whisper Large V3</option>
+                    <option value="whisper-large-v3-turbo">Whisper Large V3 Turbo</option>
+                </select>
+            </div>
+            <div class="ai-section ai-chat">
+                <h6>Assistant IA — Analyse &amp; Aide</h6>
+                <div class="ai-chat-messages" id="ai-chat-messages">
+                    <div class="ai-msg assistant">
+                        <div class="msg-role">Assistant IA</div>
+                        <p>Bienvenue ! Activez l'IA et sélectionnez un fichier dans l'éditeur pour que je puisse l'analyser. Je peux expliquer le code, proposer des modifications et décrire l'impact in-game de chaque changement.</p>
+                    </div>
+                </div>
+                <div class="ai-chat-input">
+                    <input type="text" class="ai-input" id="ai-chat-input" placeholder="Posez une question sur le code..." onkeydown="if(event.key==='Enter')sendAIChat()">
+                    <button class="ai-btn ai-btn-success" onclick="sendAIChat()">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- AI Notification Button -->
+<button class="ai-notif" id="ai-notif-btn" onclick="showAISuggestions()" title="Suggestions IA disponibles">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a4 4 0 014 4v1a1 1 0 001 1h1a4 4 0 010 8h-1a1 1 0 00-1 1v1a4 4 0 01-8 0v-1a1 1 0 00-1-1H6a4 4 0 010-8h1a1 1 0 001-1V6a4 4 0 014-4zm0 4a2 2 0 100 4 2 2 0 000-4z"/></svg>
+</button>
+
+<!-- AI Suggestions Overlay -->
+<div class="ai-suggestions-overlay" id="ai-suggestions-overlay" onclick="if(event.target===this)closeAISuggestions()">
+    <div class="ai-suggestions-panel">
+        <h4>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="var(--accent-green)" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg>
+            Suggestions IA
+            <button class="close-ai" style="margin-left:auto" onclick="closeAISuggestions()">&times;</button>
+        </h4>
+        <div id="ai-suggestions-list"></div>
+    </div>
+</div>
+
 <!-- Scripts -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
@@ -304,6 +502,9 @@ body { background:var(--bg-primary); color:var(--text-primary); font-family:'Seg
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/xml/xml.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/clike/clike.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/properties/properties.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/marked@12.0.0/marked.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@xenova/transformers@2.17.1/dist/transformers.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/libarchive.js@1.3.0/dist/libarchive.js" defer></script>
 
 <script>
 // ===========================================================================
@@ -388,7 +589,7 @@ function initImportInputs() {
 function triggerImport() {
     // Show a choice: ZIP file or folder
     const input = document.getElementById('import-zip-input');
-    input.setAttribute('accept', '.zip,.jar,.esp,.esm,.esl,.bsa,.ba2,.nif,.dds,.pex,.psc,.seq,.swf,.txt,.cfg,.ini,.json,.xml,.7z,.rar');
+    input.setAttribute('accept', '.zip,.jar,.rar,.7z,.esp,.esm,.esl,.bsa,.ba2,.nif,.dds,.pex,.psc,.seq,.swf,.txt,.cfg,.ini,.json,.xml');
     input.removeAttribute('webkitdirectory');
     input.setAttribute('multiple', '');
     input.click();
@@ -407,11 +608,17 @@ async function handleDroppedFiles(fileList) {
     try {
         const files = Array.from(fileList);
         const zipFiles = files.filter(f => /\.(zip|jar)$/i.test(f.name));
-        const looseFiles = files.filter(f => !/\.(zip|jar)$/i.test(f.name));
+        const compressedFiles = files.filter(f => /\.(rar|7z)$/i.test(f.name));
+        const looseFiles = files.filter(f => !/\.(zip|jar|rar|7z)$/i.test(f.name));
 
         // Process ZIP files
         for (const zf of zipFiles) {
             await importZip(zf);
+        }
+
+        // Process RAR/7z files
+        for (const cf of compressedFiles) {
+            await handleCompressedFile(cf);
         }
 
         // Process loose files
@@ -1042,9 +1249,11 @@ function selectFile(path) {
     } else if (ext === '.dds') {
         showDDSPreview(path, file);
         switchTabByName('preview-panel');
+        sendFileTo3DPreview(path, file.data);
     } else if (ext === '.nif') {
         showNIFView(path, file);
-        switchTabByName('props-panel');
+        switchTabByName('preview-panel');
+        sendFileTo3DPreview(path, file.data);
     } else {
         showHexView(path, file);
         switchTabByName('hex-panel');
@@ -2073,6 +2282,386 @@ window.addEventListener('beforeunload', (e) => {
         e.returnValue = '';
     }
 });
+
+// ===========================================================================
+// OPTIONS POPUP
+// ===========================================================================
+function openOptions() {
+    document.getElementById('options-overlay').classList.add('show');
+}
+function closeOptions() {
+    document.getElementById('options-overlay').classList.remove('show');
+}
+
+// ===========================================================================
+// AI PANEL & GROQ INTEGRATION
+// ===========================================================================
+const aiState = {
+    active: false,
+    apiKey: '',
+    model: 'llama-3.3-70b-versatile',
+    chatHistory: [],
+    lastAnalysis: null,
+    suggestions: [],
+    analysisTimer: null,
+    analysisCount: 0
+};
+
+function openAIPanel() {
+    document.getElementById('ai-overlay').classList.add('show');
+}
+function closeAIPanel() {
+    document.getElementById('ai-overlay').classList.remove('show');
+}
+
+function toggleAIActivation() {
+    const keySection = document.getElementById('ai-key-section');
+    const btn = document.getElementById('ai-activate-btn');
+    const btnText = document.getElementById('ai-activate-text');
+    const badge = document.getElementById('ai-status-badge');
+    const badgeText = document.getElementById('ai-status-text');
+
+    if (!aiState.active) {
+        keySection.classList.add('show');
+        const key = document.getElementById('ai-api-key').value.trim();
+        if (key && key.startsWith('gsk_')) {
+            aiState.apiKey = key;
+            aiState.active = true;
+            aiState.model = document.getElementById('ai-model-select').value;
+            btnText.textContent = 'Désactiver IA';
+            btn.classList.remove('ai-btn-primary');
+            btn.classList.add('ai-btn-success');
+            badge.classList.remove('disconnected');
+            badge.classList.add('connected');
+            badgeText.textContent = 'Connecté';
+            toast('IA activée avec succès !', 'success');
+            startCodeAnalysisLoop();
+        } else if (!key) {
+            toast('Entrez votre clé API Groq pour activer l\'IA', 'warning');
+        } else {
+            toast('Clé API invalide — doit commencer par gsk_', 'error');
+        }
+    } else {
+        aiState.active = false;
+        aiState.apiKey = '';
+        btnText.textContent = 'Activer IA';
+        btn.classList.remove('ai-btn-success');
+        btn.classList.add('ai-btn-primary');
+        badge.classList.remove('connected');
+        badge.classList.add('disconnected');
+        badgeText.textContent = 'Désactivé';
+        document.getElementById('ai-notif-btn').classList.remove('show');
+        if (aiState.analysisTimer) clearTimeout(aiState.analysisTimer);
+        toast('IA désactivée', 'info');
+    }
+}
+
+function toggleKeyVisibility() {
+    const input = document.getElementById('ai-api-key');
+    input.type = input.type === 'password' ? 'text' : 'password';
+}
+
+// Groq API call
+async function callGroqAPI(messages, temperature = 0.7) {
+    if (!aiState.active || !aiState.apiKey) {
+        toast('Activez l\'IA d\'abord', 'warning');
+        return null;
+    }
+    try {
+        const resp = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + aiState.apiKey,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                model: document.getElementById('ai-model-select').value,
+                messages: messages,
+                temperature: temperature,
+                max_tokens: 4096
+            })
+        });
+        if (!resp.ok) {
+            const err = await resp.json().catch(() => ({}));
+            throw new Error(err.error?.message || 'Erreur API: ' + resp.status);
+        }
+        const data = await resp.json();
+        return data.choices?.[0]?.message?.content || '';
+    } catch (err) {
+        console.error('Groq API error:', err);
+        toast('Erreur Groq: ' + err.message, 'error');
+        return null;
+    }
+}
+
+// Chat
+async function sendAIChat() {
+    const input = document.getElementById('ai-chat-input');
+    const msg = input.value.trim();
+    if (!msg) return;
+    if (!aiState.active) { toast('Activez l\'IA d\'abord', 'warning'); return; }
+
+    input.value = '';
+    appendChatMessage('user', msg);
+
+    // Build context from current file
+    let systemPrompt = `Tu es un assistant expert en modding Bethesda (Skyrim, Fallout 4, Starfield). Tu analyses le code des mods et expliques en détail les effets in-game de chaque modification. Tu proposes des améliorations concrètes avec le code complet et les propriétés détaillées. Tu écris directement les codes possibles avec leurs propriétés. Tu prends des initiatives en termes de propositions. Réponds en français.`;
+
+    if (state.selectedFile && state.editor) {
+        const code = state.editor.getValue();
+        const path = state.selectedFile;
+        systemPrompt += `\n\nFichier actuellement ouvert: ${path}\nContenu du fichier:\n\`\`\`\n${code.substring(0, 6000)}\n\`\`\``;
+    }
+
+    const messages = [
+        { role: 'system', content: systemPrompt },
+        ...aiState.chatHistory.slice(-10),
+        { role: 'user', content: msg }
+    ];
+
+    appendChatMessage('assistant', '⏳ Analyse en cours...');
+
+    const response = await callGroqAPI(messages);
+    // Remove loading message
+    const messagesEl = document.getElementById('ai-chat-messages');
+    if (messagesEl.lastChild) messagesEl.removeChild(messagesEl.lastChild);
+
+    if (response) {
+        aiState.chatHistory.push({ role: 'user', content: msg });
+        aiState.chatHistory.push({ role: 'assistant', content: response });
+        appendChatMessage('assistant', response);
+    } else {
+        appendChatMessage('assistant', 'Erreur lors de la communication avec l\'IA. Vérifiez votre clé API et le modèle sélectionné.');
+    }
+}
+
+function appendChatMessage(role, content) {
+    const container = document.getElementById('ai-chat-messages');
+    const div = document.createElement('div');
+    div.className = 'ai-msg ' + role;
+    const roleLabel = role === 'user' ? 'Vous' : 'Assistant IA';
+
+    let rendered = content;
+    if (typeof marked !== 'undefined' && role === 'assistant') {
+        try { rendered = marked.parse(content); } catch(e) { rendered = esc(content).replace(/\n/g, '<br>'); }
+    } else {
+        rendered = esc(content).replace(/\n/g, '<br>');
+    }
+
+    div.innerHTML = `<div class="msg-role">${roleLabel}</div>${rendered}`;
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+}
+
+// ===========================================================================
+// REAL-TIME CODE ANALYSIS
+// ===========================================================================
+let lastAnalyzedCode = '';
+
+function startCodeAnalysisLoop() {
+    if (!aiState.active) return;
+    if (aiState.analysisTimer) clearTimeout(aiState.analysisTimer);
+
+    aiState.analysisTimer = setInterval(() => {
+        if (!aiState.active || !state.editor || !state.selectedFile) return;
+        const currentCode = state.editor.getValue();
+        if (currentCode === lastAnalyzedCode || currentCode.length < 10) return;
+
+        // Only analyze if code changed
+        lastAnalyzedCode = currentCode;
+        runCodeAnalysis(currentCode, state.selectedFile);
+    }, 5000);
+}
+
+async function runCodeAnalysis(code, filePath) {
+    if (!aiState.active) return;
+
+    const ext = getExt(filePath);
+    const systemMsg = `Tu es un expert en modding Bethesda. Analyse ce fichier de mod et retourne un JSON valide (pas de markdown, juste le JSON brut) avec cette structure exacte:
+{
+  "summary": "Résumé court de ce que fait ce fichier",
+  "gameEffects": "Description des effets in-game de ce code",
+  "suggestions": [
+    {"title": "Titre de la suggestion", "description": "Description détaillée de l'amélioration proposée et son impact in-game", "code": "code complet de la modification proposée"}
+  ],
+  "warnings": ["avertissements éventuels"]
+}
+Propose entre 2 et 5 suggestions concrètes de modifications possibles avec le code détaillé et les propriétés. Explique l'impact in-game de chaque suggestion. Fichier: ${filePath}`;
+
+    const messages = [
+        { role: 'system', content: systemMsg },
+        { role: 'user', content: `Analyse ce code:\n\`\`\`\n${code.substring(0, 6000)}\n\`\`\`` }
+    ];
+
+    const response = await callGroqAPI(messages, 0.3);
+    if (!response) return;
+
+    try {
+        // Try to parse JSON from response (may be wrapped in markdown)
+        let json = response;
+        const jsonMatch = response.match(/\{[\s\S]*\}/);
+        if (jsonMatch) json = jsonMatch[0];
+        const analysis = JSON.parse(json);
+
+        aiState.lastAnalysis = analysis;
+        aiState.suggestions = analysis.suggestions || [];
+        aiState.analysisCount++;
+
+        // Show green notification
+        if (aiState.suggestions.length > 0) {
+            document.getElementById('ai-notif-btn').classList.add('show');
+        }
+    } catch (e) {
+        console.warn('AI analysis parse error:', e);
+        // Even if JSON parse fails, store raw response as suggestion
+        aiState.lastAnalysis = { summary: response.substring(0, 200), suggestions: [{ title: 'Analyse IA', description: response, code: '' }] };
+        aiState.suggestions = aiState.lastAnalysis.suggestions;
+        document.getElementById('ai-notif-btn').classList.add('show');
+    }
+}
+
+function showAISuggestions() {
+    document.getElementById('ai-notif-btn').classList.remove('show');
+    const overlay = document.getElementById('ai-suggestions-overlay');
+    const list = document.getElementById('ai-suggestions-list');
+
+    if (!aiState.lastAnalysis) {
+        list.innerHTML = '<p style="color:var(--text-secondary);text-align:center;padding:20px">Aucune suggestion disponible. Sélectionnez un fichier dans l\'éditeur.</p>';
+        overlay.classList.add('show');
+        return;
+    }
+
+    const a = aiState.lastAnalysis;
+    let html = '';
+
+    if (a.summary) {
+        html += `<div class="ai-suggestion-card" style="border-left:3px solid var(--accent-blue)">
+            <div class="sug-title">📋 Résumé</div>
+            <div class="sug-desc">${esc(a.summary)}</div>
+        </div>`;
+    }
+    if (a.gameEffects) {
+        html += `<div class="ai-suggestion-card" style="border-left:3px solid var(--accent-gold)">
+            <div class="sug-title">🎮 Effets In-Game</div>
+            <div class="sug-desc">${esc(a.gameEffects)}</div>
+        </div>`;
+    }
+    if (a.warnings && a.warnings.length > 0) {
+        html += `<div class="ai-suggestion-card" style="border-left:3px solid var(--accent-red)">
+            <div class="sug-title">⚠️ Avertissements</div>
+            <div class="sug-desc">${a.warnings.map(w => esc(w)).join('<br>')}</div>
+        </div>`;
+    }
+
+    if (a.suggestions && a.suggestions.length > 0) {
+        for (const s of a.suggestions) {
+            html += `<div class="ai-suggestion-card" onclick="applyAISuggestion(this)" data-code="${esc(s.code || '')}">
+                <div class="sug-title" style="color:var(--accent-green)">✨ ${esc(s.title)}</div>
+                <div class="sug-desc">${esc(s.description)}</div>
+                ${s.code ? `<pre><code>${esc(s.code)}</code></pre>` : ''}
+            </div>`;
+        }
+    }
+
+    if (!html) html = '<p style="color:var(--text-secondary);text-align:center;padding:20px">Aucune suggestion pour le moment.</p>';
+
+    list.innerHTML = html;
+    overlay.classList.add('show');
+}
+
+function closeAISuggestions() {
+    document.getElementById('ai-suggestions-overlay').classList.remove('show');
+}
+
+function applyAISuggestion(el) {
+    const code = el.dataset.code;
+    if (!code || !state.editor) return;
+    // Insert suggestion as comment + code at cursor position
+    const cursor = state.editor.getCursor();
+    state.editor.replaceRange('\n// --- Suggestion IA ---\n' + code + '\n// --- Fin Suggestion ---\n', cursor);
+    closeAISuggestions();
+    toast('Suggestion insérée dans l\'éditeur', 'success');
+}
+
+// ===========================================================================
+// COMPRESSED FILE SUPPORT (.rar, .7z)
+// ===========================================================================
+async function handleCompressedFile(file) {
+    // Use libarchive.js for .rar and .7z
+    if (typeof Archive === 'undefined') {
+        toast('Bibliothèque de décompression en cours de chargement...', 'info');
+        // Wait for libarchive to load
+        await new Promise(r => setTimeout(r, 2000));
+        if (typeof Archive === 'undefined') {
+            toast('Impossible de charger la bibliothèque de décompression', 'error');
+            return false;
+        }
+    }
+
+    showLoading('Décompression de ' + file.name + '...', 'Lecture de l\'archive...');
+    try {
+        const archive = await Archive.open(file);
+        const extractedFiles = await archive.extractFiles();
+
+        let processed = 0;
+        for (const [path, fileData] of Object.entries(extractedFiles)) {
+            if (!fileData || fileData.size === 0) continue;
+            const buffer = await fileData.arrayBuffer();
+            const data = new Uint8Array(buffer);
+            const cleanedPath = cleanPath(path);
+            if (!cleanedPath) continue;
+            state.files.set(cleanedPath, { data, modified: false });
+            state.totalSize += data.byteLength;
+            processed++;
+        }
+
+        if (!state.modName) {
+            state.modName = file.name.replace(/\.(rar|7z)$/i, '');
+        }
+
+        toast('Extrait ' + processed + ' fichier(s) de ' + file.name, 'success');
+        return true;
+    } catch (err) {
+        console.error('Archive extraction error:', err);
+        // Fallback: try JSZip for some formats
+        try {
+            await importZip(file);
+            return true;
+        } catch (e2) {
+            toast('Format d\'archive non supporté: ' + file.name + '. Essayez un fichier .zip.', 'error');
+            return false;
+        }
+    }
+}
+
+// ===========================================================================
+// 3D PREVIEW IFRAME COMMUNICATION
+// ===========================================================================
+function sendFileTo3DPreview(path, data) {
+    const iframe = document.getElementById('preview-iframe');
+    if (!iframe || !iframe.contentWindow) return;
+
+    try {
+        // Send file data to 3D.php via postMessage
+        const ext = getExt(path);
+        const base64 = btoa(String.fromCharCode(...data.slice(0, Math.min(data.length, 5242880))));
+        iframe.contentWindow.postMessage({
+            type: 'loadFile',
+            fileName: getFileName(path),
+            fileExt: ext,
+            fileData: base64,
+            filePath: path
+        }, '*');
+    } catch (e) {
+        console.warn('Could not send file to 3D preview:', e);
+    }
+}
+
+// Override preview for visual files
+function show3DPreview(path, file) {
+    switchTabByName('preview-panel');
+    sendFileTo3DPreview(path, file.data);
+}
 </script>
 </body>
 </html>
