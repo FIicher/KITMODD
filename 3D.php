@@ -10,9 +10,9 @@
 
 // === HEADERS DE SÉCURITÉ HTTP ===
 
-// Empêche le clickjacking
+// Permet l'intégration via iframe depuis d'autres domaines
 
-header('X-Frame-Options: SAMEORIGIN');
+// header('X-Frame-Options: SAMEORIGIN');
 
 // Protection XSS intégrée au navigateur
 
