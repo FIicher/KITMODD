@@ -2351,7 +2351,7 @@ function toggleAIActivation() {
         badge.classList.add('disconnected');
         badgeText.textContent = 'Désactivé';
         document.getElementById('ai-notif-btn').classList.remove('show');
-        if (aiState.analysisTimer) clearTimeout(aiState.analysisTimer);
+        if (aiState.analysisTimer) clearInterval(aiState.analysisTimer);
         toast('IA désactivée', 'info');
     }
 }
@@ -2644,14 +2644,20 @@ function sendFileTo3DPreview(path, data) {
     try {
         // Send file data to 3D.php via postMessage
         const ext = getExt(path);
-        const base64 = btoa(String.fromCharCode(...data.slice(0, Math.min(data.length, 5242880))));
+        const chunk = data.slice(0, Math.min(data.length, 5242880));
+        let binary = '';
+        const chunkSize = 8192;
+        for (let i = 0; i < chunk.length; i += chunkSize) {
+            binary += String.fromCharCode.apply(null, chunk.subarray(i, Math.min(i + chunkSize, chunk.length)));
+        }
+        const base64 = btoa(binary);
         iframe.contentWindow.postMessage({
             type: 'loadFile',
             fileName: getFileName(path),
             fileExt: ext,
             fileData: base64,
             filePath: path
-        }, '*');
+        }, 'https://pdf.celephe.com');
     } catch (e) {
         console.warn('Could not send file to 3D preview:', e);
     }
